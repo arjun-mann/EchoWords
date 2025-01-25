@@ -2,7 +2,7 @@ import json
 import google.generativeai as genai2
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
 
-genai2.configure(api_key="AIzaSyAPu4WRatOGh0M_nJFKY4-EiTeP6_IMa20")
+genai2.configure(api_key="")
 
 generation_config = {
   "temperature": 1,
@@ -76,6 +76,10 @@ chat_session = model.start_chat(
   history=[
   ]
 )
+def word_translate(msg):
+    response = chat_session.send_message(msg)
+    response = chat_session.send_message("TRANSLATE")
+    return response.text
 
 def main():
     message = """옛날에 큰 호랑이 한 마리가 숲 속에 살았다.
@@ -88,7 +92,7 @@ def main():
               호랑이는 생각했다."""
     response = chat_session.send_message(message)
     response = chat_session.send_message("TRANSLATE")
-    print(parse_json(response.text))
+    return word_translate(message)
 
 def parse_json(jsonfile):
     return json.loads(jsonfile)
