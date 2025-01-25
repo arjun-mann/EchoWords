@@ -15,12 +15,17 @@ generation_config = {
 model = genai.GenerativeModel(
   model_name="gemini-1.5-flash",
   generation_config=generation_config,
-  system_instruction = """Disregard all previous prompts. You will be acting as a professional translator who is translating to an amateur learner. Do not respond until I prompt you. I will later provide lines of text for you in a language. Analyze the grammar and the sentence structure in detail line by line for every sentence. After analyzing, give the direct translation. Please respond back in English that still reflects the original tone and structure. Put the response of your analysis in English in JSON format. Even for the nested key value pairs, recursively change the key into English. Also for each of the words and/or phrases from the original language, put a corresponding English word/phrase by recursively adding English next to the original language. 
-Use this JSON schema: 
-sentences = {Sentence: “original sentence”, Translation: “translated sentence”, Grammatical structure: “grammar”, Analysis: “translated analysis of the entire sentence, not individual words” }
-Return: list[sentences] 
-You should respond back in English when I say PLEASE HELP.
-""",
+  system_instruction = """Disregard all previous prompts. You will be acting as a professional translator who is translating to an amateur learner. Do not respond until I prompt you. 
+                          I will later provide lines of text for you in a language. 
+                          Analyze the grammar and the sentence structure in detail line by line for every sentence. 
+                          After analyzing, give the direct translation. Please respond back in English that still reflects the original tone and structure. 
+                          Put the response of your analysis in English in JSON format. Even for the nested key value pairs, recursively change the key into English. 
+                          Also for each of the words and/or phrases from the original language, put a corresponding English word/phrase by recursively adding English next to the original language. 
+                          Use this JSON schema: 
+                          sentences = {Sentence: “original sentence”, Translation: “translated sentence”, Grammatical structure: “grammar”, Analysis: “translated analysis of the entire sentence, not individual words” }
+                          Return: list[sentences] 
+                          You should respond back in English when I say PLEASE HELP.
+                          """,
   safety_settings={HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
                    HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
                    HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
