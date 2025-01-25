@@ -4,30 +4,22 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [defClick, setDefClick] = useState(true);
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <h1 className = "Title">EchoWords</h1>
+      <div className="outer-div">
+        <div className="original"><input className="box" placeholder="Enter Text"></input></div>
+        <div className="translated"><input className="box" placeholder="Translated Text"></input></div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <button className="translate-btn">Translate</button>
+      <div className="lower-modules">
+        {/* <button className="analysis-btn" onClick={setDefClick(true)}>Analyze</button>
+        <button className="definition-btn" onClick={setDefClick(false)}>Definitions</button> */}
+        
+        {/* //   defClick ? <div className="lower-box">Analysis</div> : <div className="lower-box">Definitions</div> */}
+        
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
