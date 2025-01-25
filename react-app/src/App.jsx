@@ -1,23 +1,26 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [defClick, setDefClick] = useState(true);
+  const [defClick, setDefClick] = useState(false);
   return (
     <>
       <h1 className = "Title">EchoWords</h1>
+      
       <div className="outer-div">
-        <div className="original"><input className="box" placeholder="Enter Text"></input></div>
-        <div className="translated"><input className="box" placeholder="Translated Text"></input></div>
+        <div className="original"><textarea className="box" placeholder="Enter Text"></textarea></div>
+        <div className="box translated">Translated Text</div>
       </div>
+      
       <button className="translate-btn">Translate</button>
+      
       <div className="lower-modules">
-        {/* <button className="analysis-btn" onClick={setDefClick(true)}>Analyze</button>
-        <button className="definition-btn" onClick={setDefClick(false)}>Definitions</button> */}
+        <div className="btn-container">
+          <button className="second-btn" onClick={()=>setDefClick(false)}>Analyze</button>
+          <button className="second-btn" onClick={()=>setDefClick(true)}>Definitions</button> 
+        </div>
         
-        {/* //   defClick ? <div className="lower-box">Analysis</div> : <div className="lower-box">Definitions</div> */}
+        {defClick ? <div className="lower-box">Analysis</div> : <div className="lower-box">Definitions</div>}
         
       </div>
     </>
