@@ -19,8 +19,8 @@ model = genai2.GenerativeModel(
                         Your output will only have 1 JSON file, in which the text (EXCLUDING PUNCTUATION) will be parsed into a dictionary with the original word being the key and the translation being the value. 
                         NONE of the punctuation should be translated or considered during execution. 
                         IGNORE ALL PUNCTUATIONS. All of the keys must be able to combine to compose the entirety of the original text without punctuation. 
-                        Example input: "Example input: "作为中国文学史上第一部章回小说，《三国演义》为我们展示出了一幅波澜壮阔乱世英雄争天下的历史画面."
-                        Use this JSON schema: 
+                        Example input: "作为中国文学史上第一部章回小说，《三国演义》为我们展示出了一幅波澜壮阔乱世英雄争天下的历史画面."
+                        Example output in the proper JSON schema: 
 [
 
   {"作为": "as"},
