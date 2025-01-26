@@ -17,7 +17,7 @@ model = genai3.GenerativeModel(
   system_instruction = """Disregard all previous prompts. You will be acting as a professional translator who is translating for an amateur learner. 
                           Do not respond until I say "RESPOND". I will provide lines of text for you to translate in a foreign language. 
                           DO NOT perform the translation when the foreign laguage text is provided.
-                          ONLY WHEN prompted with the word "RESPOND," provide the translated text in English and nothing else. DO NOT TRANSLATE UNLESS I type "RESPOND".
+                          ONLY WHEN prompted with the word "RESPOND," provide the translated text in English and NOTHING ELSE. DO NOT TRANSLATE UNLESS I type "RESPOND".
                           Make sure that the english translated version still reflects the original tone and structure. 
                           When prompted, do not provide anything else EXCEPT for the translated English version of the original text""",
   safety_settings={HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,

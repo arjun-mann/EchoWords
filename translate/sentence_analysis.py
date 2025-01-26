@@ -2,7 +2,7 @@ import json
 import google.generativeai as genai
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
 
-genai.configure(api_key="AIzaSyCcBmgGrY_mN9Ezd1KPyCr_E5hNlOKEKCE")
+genai.configure(api_key="AIzaSyDYu3B89zPTavNY2R3r8hRtMHpBCm_nnTk")
 
 generation_config = {
   "temperature": 1,
@@ -24,7 +24,7 @@ model = genai.GenerativeModel(
                           Use this JSON schema: 
                           sentences = {Sentence: “original sentence”, Translation: “translated sentence”, Grammatical structure: “grammar”, Analysis: “translated analysis of the entire sentence, not individual words” }
                           Return: list[sentences] 
-                          You should respond back in English when I say PLEASE HELP.
+                          You should respond back in English and only the JSON file with the correct return format when I say PLEASE HELP.
                           """,
   safety_settings={HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
                    HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
@@ -55,7 +55,6 @@ def main():
               호랑이는 생각했다."""
     response = chat_session.send_message(message)
     response = chat_session.send_message("PLEASE HELP")
-    #print(response.text)
     print(parse_json(response.text))
 
 
