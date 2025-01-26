@@ -27,9 +27,9 @@ def s_translate():
 @app.route('/wtran', methods=["POST"])
 def w_translate():
     data = request.data
-    #print(data.decode("utf-8"))
+    print(data.decode("utf-8"))
     res = (word_translation.word_translate(data.decode("utf-8")))
-    #print(res)
+    print(res)
     return res
 
 if __name__ == "__main__":

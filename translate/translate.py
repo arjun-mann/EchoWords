@@ -22,6 +22,7 @@ model = genai3.GenerativeModel(
                           When prompted, do not provide anything else EXCEPT for the translated English version of the original text.
                           Example input: "作为中国文学史上第一部章回小说，《三国演义》为我们展示出了一幅波澜壮阔乱世英雄争天下的历史画面，故事情节随着几大人物阵营的演变紧紧抓牢看客眼球。那么随着时间推移，三国人物阵营是怎样变化的呢？狗熊会根据《三国演义》原著电子版汉语文本，应用文本分析、关联规则挖掘和社区探测技术，从数据角度分析三国各个时期的人物阵营情况。"
                           Example ouput: "As the first chapter novel in Chinese literary history, "Romance of the Three Kingdoms" presents us with a magnificent historical picture of heroes vying for the world in a turbulent era. The plot tightly grips the attention of readers as it evolves with the changes in the camps of several major characters. So, how did the camps of the Three Kingdoms characters change over time? This paper will analyze the camp situations of the Three Kingdoms characters in different periods from a data perspective, based on the original electronic Chinese text of "Romance of the Three Kingdoms", by applying text analysis, association rule mining, and community detection techniques."
+                          When prompted with "RESPOND", execute the translation on the last given piece of text other than "RESPOND".
                           """,
   safety_settings={HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
                    HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-  const [defClick, setDefClick] = useState(true);
+  const [defClick, setDefClick] = useState(false);
   const [msg, setMSG] = useState("");
   const [translation, setTranslation] = useState("");
   const [analysis, setAnalysis] = useState(null);
@@ -31,19 +31,7 @@ function App() {
     console.log(res);
     console.log(msg);
 
-    const sentence = await fetch("http://127.0.0.1:5000/stran",{
-      method: "POST",
-      headers:  {
-        "Content-type" : "application/json",
-      },
-      body: msg,
-    });
-    let res2 = await sentence.json();
-    //console.log(res2);
-    if(!Array.isArray(res2)) res2 = [res2]
-    setAnalysis(res2);
-
-    console.log("ran res2", res2, res);
+    console.log("ran res", res);
     console.log(msg)
     const w_list = await fetch("http://127.0.0.1:5000/wtran", {
       method: "POST",
@@ -60,6 +48,19 @@ function App() {
 
     //console.log(words);
     
+  }
+  async function unpack() {
+    const sentence = await fetch("http://127.0.0.1:5000/stran",{
+      method: "POST",
+      headers:  {
+        "Content-type" : "application/json",
+      },
+      body: msg,
+    });
+    let res2 = await sentence.json();
+    //console.log(res2);
+    if(!Array.isArray(res2)) res2 = [res2]
+    setAnalysis(res2);
   }
   return (
     <>
@@ -86,11 +87,11 @@ function App() {
       </div>
       <div className="lower-modules">
         <div className="btn-container2">
-          <button className="second-btn" onClick={()=>setDefClick(true)}>Analyze</button>
-          <button className="second-btn" onClick={()=>setDefClick(false)}>Definitions</button> 
+          <button className="second-btn" onClick={()=>unpack()}>Analyze</button>
+          {/* <button className="second-btn" onClick={()=>setDefClick(false)}>Definitions</button>  */}
         </div>
         
-        {defClick ? <div className="lower-box">
+        {!defClick ? <div className="lower-box">
           {analysis &&
           analysis.map((a, i) => {
             const original = Object.entries(a);
