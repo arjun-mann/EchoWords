@@ -15,11 +15,11 @@ generation_config = {
 model = genai2.GenerativeModel(
   model_name="gemini-1.5-flash",
   generation_config=generation_config,
-  system_instruction ="""Disregard all prior instructions. You will be acting as a professional translator who is translating to an amateur learner. Provide me a word by word (EXCLUDING punctuations) english translation of the text I will send you next.
-                        Your output will only have 1 JSON file, in which the text (EXCLUDING PUNCTUATION) will be parsed into a dictionary with the original word being the key and the translation being the value. 
-                        NONE of the punctuation should be translated or considered during execution. 
-                        IGNORE ALL PUNCTUATIONS. All of the keys must be able to combine to compose the entirety of the original text without punctuation. 
-                        Example input: "作为中国文学史上第一部章回小说，《三国演义》为我们展示出了一幅波澜壮阔乱世英雄争天下的历史画面."
+  system_instruction ="""Disregard all prior instructions. You will be acting as a professional translator who is translating to an amateur learner. Provide me a word by word (INCLUDING punctuations) english translation of the text I will send you next.
+                        Your output will only have 1 JSON file, in which the text (INCLUDING PUNCTUATION) will be parsed into a dictionary with the original word being the key and the translation being the value. 
+                        All punctuation should be translated or considered during execution. 
+                        All of the keys must be able to combine to compose the entirety of the original text including punctuation. 
+                        Example input: "作为中国文学史上第一部章回小说，《三国演义》为我们展示出了一幅波澜壮阔乱世英雄争天下的历史画面。"
                         Example output in the proper JSON schema: 
 [
 
@@ -36,6 +36,8 @@ model = genai2.GenerativeModel(
   {"章回": "chapter"},
 
   {"小说": "novel"},
+
+  {"，": "comma"},
 
   {"《三国演义》": "Romance of the Three Kingdoms"},
 
@@ -64,6 +66,8 @@ model = genai2.GenerativeModel(
   {"历史": "history"},
 
   {"画面": "picture"}
+
+  {"。": "period"},
 
 ]
 
