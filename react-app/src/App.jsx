@@ -21,14 +21,15 @@ function App() {
     const temp = await fetch("http://127.0.0.1:5000/tran", {
       method: "POST",
       headers: {
-        "Content-type" : "application/json",
+        "Content-type" : "text/plain",
       },
       body: msg,
     });
     const res = await temp.text();
     setTranslation(res);
+    console.log("F");
     console.log(res);
-    
+    console.log(msg);
 
     const sentence = await fetch("http://127.0.0.1:5000/stran",{
       method: "POST",
@@ -52,12 +53,12 @@ function App() {
       body: msg,
     });
     const res3 = await w_list.json();
-    console.log('hi');
-    console.log(res3);
+    //console.log('hi');
+    //console.log(res3);
     setWords(res3);
     setHoverArray(Array(res3.length).fill(false))
 
-    console.log(words);
+    //console.log(words);
     
   }
   return (
@@ -66,7 +67,7 @@ function App() {
       
       <div className="outer-div">
          {!words ? <div><textarea className="box placeholder1" placeholder="Enter Text" onChange={(e) => setMSG(e.target.value)} value={msg}></textarea></div>
-          : <div className="box2">{
+          : <div className="box box2">{
             words.map((e, i) => {
               const elem = Object.entries(e)[0];
               return (<div className='definition'>
