@@ -2,79 +2,106 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-  const [defClick, setDefClick] = useState(false);
+  const [defClick, setDefClick] = useState(true);
   const [msg, setMSG] = useState("");
-  let [analysis, setAnalysis] = useState({
-    sentence: "",
-    translation : "",
-    structure :"",
-    analysis : "",
-  });
+  const [translation, setTranslation] = useState("");
+  const [analysis, setAnalysis] = useState(null);
+  const [words, setWords] = useState(null);
+  const [hover_array, setHoverArray] = useState(null);
+
+  const handleClear = () => {
+    setMSG("");
+    setWords("");
+    setAnalysis("");
+    setTranslation("");
+  };
   async function getData(){
     console.log("get data started");
-    // url = "http://127.0.0.1:5000/wtran"
-    // try{
-    fetch("http://127.0.0.1:5000/stran", {
+    // url = "http://127.0.0.1:5000/tran"
+    const temp = await fetch("http://127.0.0.1:5000/tran", {
       method: "POST",
       headers: {
         "Content-type" : "application/json",
       },
       body: msg,
-    })
-      .then((res => res.json)
-      .then(data => {setAnalysis({
-        sentence: data.sentence,
-        translation: data.translation,
-        structure: data.structure,
-        analysis: data.analysis,
-      });
-    })
-  );
-  
+    });
+    const res = await temp.text();
+    setTranslation(res);
+    console.log(res);
+    
 
+    const sentence = await fetch("http://127.0.0.1:5000/stran",{
+      method: "POST",
+      headers:  {
+        "Content-type" : "application/json",
+      },
+      body: msg,
+    });
+    let res2 = await sentence.json();
+    //console.log(res2);
+    if(!Array.isArray(res2)) res2 = [res2]
+    setAnalysis(res2);
 
-      
-    //   console.log('5');
-      // let parsed_sentence = JSON.parse(json_sentence);
-      // parsed_sentence.forEach((e) => {
-      //   // textEl.textContent += "..."
-      //   setAnalysis(analysis += "Sentence: ");
-      //   setAnalysis(analysis += e["Sentence"]);
-      //   setAnalysis(analysis += "Translation: ");
-      //   setAnalysis(analysis += e["Translation"]);
-      //   setAnalysis(analysis += "Grammatical Structure: ");
-      //   setAnalysis(analysis += e["Grammatical Structure"]);
-      //   setAnalysis(analysis+= "Analysis: ")
-      //   setAnalysis(analysis+= e["Analysis"])
-    //   });
+    console.log("ran res2", res2, res);
+    console.log(msg)
+    const w_list = await fetch("http://127.0.0.1:5000/wtran", {
+      method: "POST",
+      headers:  {
+        "Content-type" : "application/json",
+      },
+      body: msg,
+    });
+    const res3 = await w_list.json();
+    console.log('hi');
+    console.log(res3);
+    setWords(res3);
+    setHoverArray(Array(res3.length).fill(false))
 
-
-      // console.log(analysis);
-      // setMSG("");
-    // }
-    // catch (error){
-    //   console.error(error.message);
-    // }
+    console.log(words);
+    
   }
   return (
     <>
       <h1 className = "Title">EchoWords</h1>
       
       <div className="outer-div">
-        <div className="original"><textarea className="box" placeholder="Enter Text" onChange={(e) => setMSG(e.target.value)}></textarea></div>
+         {!words ? <div><textarea className="box placeholder1" placeholder="Enter Text" onChange={(e) => setMSG(e.target.value)} value={msg}></textarea></div>
+          : <div className="box2">{
+            words.map((e, i) => {
+              const elem = Object.entries(e)[0];
+              return (<div className='definition'>
+              {hover_array[i] && <div className="hover-word">{elem[1]}</div>}
+              <div style={hover_array[i] ? {"backgroundColor": "yellow"} : {}} className = "word" onMouseEnter={() => setHoverArray((arr) => [...arr.slice(0, i), true, ...arr.slice(i+1)])} onMouseLeave={() => setHoverArray((arr) => [...arr.slice(0, i), false, ...arr.slice(i+1)])}> {elem[0]} </div>
+              </div>)
+            }
+          )}</div>}
         
-        <div className="box translated">Translated Text</div>
+        {/* <textarea className="box" readOnly> </textarea>*/}
+        <div className="box">{translation}</div>
       </div>
-      
-      <button className="translate-btn" onClick={()=>getData()}>Translate</button>
-      
+      <div className="btn-container1">
+      <button className="first-btn" disabled={!msg.trim()} onClick={()=>getData()} >Translate</button>
+      <button className="first-btn" onClick={handleClear}>Clear</button>
+      </div>
       <div className="lower-modules">
-        <div className="btn-container">
-          <button className="second-btn" onClick={()=>setDefClick(false)}>Analyze</button>
-          <button className="second-btn" onClick={()=>setDefClick(true)}>Definitions</button> 
+        <div className="btn-container2">
+          <button className="second-btn" onClick={()=>setDefClick(true)}>Analyze</button>
+          <button className="second-btn" onClick={()=>setDefClick(false)}>Definitions</button> 
         </div>
         
-        {defClick ? <div className="lower-box">Analysis</div> : <div className="lower-box">Definitions</div>}
+        {defClick ? <div className="lower-box">
+          {analysis &&
+          analysis.map((a, i) => {
+            const original = Object.entries(a);
+            const reordered = [original[2], original[3], original[1], original[0]]
+            return <div key={i} className="analysis-line">{reordered.map((b) => {
+              return(
+                <div key={b[1]}><b>{b[0]}</b>{`: ${b[1]}`}</div>
+              )
+            })}</div>
+          })
+      }
+      </div> : <div className="lower-box">Definition</div>}
         
       </div>
     </>

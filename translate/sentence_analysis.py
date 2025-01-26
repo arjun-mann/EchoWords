@@ -22,7 +22,7 @@ model = genai.GenerativeModel(
                           Put the response of your analysis in English in JSON format. Even for the nested key value pairs, recursively change the key into English. 
                           Also for each of the words and/or phrases from the original language, put a corresponding English word/phrase by recursively adding English next to the original language. 
                           Use this JSON schema: 
-                          sentences = {Sentence: “original sentence”, Translation: “translated sentence”, Grammatical structure: “grammar”, Analysis: “translated analysis of the entire sentence, not individual words” }
+                          {Sentence: “original sentence”, Translation: “translated sentence”, Grammatical structure: “grammar”, Analysis: “translated analysis of the entire sentence, not individual words” }
                           Return: list[sentences] 
                           You should respond back in English and only the JSON file with the correct return format when I say PLEASE HELP.
                           """,
@@ -41,18 +41,11 @@ chat_session = model.start_chat(
 def sentence_translate(original_text: str) -> json:
     response = chat_session.send_message(original_text)
     response = chat_session.send_message("PLEASE HELP")
-    return response.json
+    return parse_json(response.text)
     
 def main():
     #message = "作为中国文学史上第一部章回小说，《三国演义》为我们展示出了一幅波澜壮阔乱世英雄争天下的历史画面，故事情节随着几大人物阵营的演变紧紧抓牢看客眼球。那么随着时间推移，三国人物阵营是怎样变化的呢？狗熊会根据《三国演义》原著电子版汉语文本，应用文本分析、关联规则挖掘和社区探测技术，从数据角度分析三国各个时期的人物阵营情况。"
-    message = """옛날에 큰 호랑이 한 마리가 숲 속에 살았다.
-              어느 날 호랑이는 배가 고파서 마을로 갔다.
-              마을 옆 밭에 소 한 마리가 서 있었다.
-              호랑이는 소를 잡아 먹고 싶은데 갑자기 시끄러운 아기 울음소리를 들었다.
-              밭 옆에 있는 집에서 아기가 울고 있었다.
-              호랑이는 집으로 다가갔다.
-              ‘아기가 맛있을 것 같아.’
-              호랑이는 생각했다."""
+    message = """"""
     response = chat_session.send_message(message)
     response = chat_session.send_message("PLEASE HELP")
     print(parse_json(response.text))
@@ -63,4 +56,6 @@ def parse_json(some_file):
 
 if __name__ == "__main__":
     main()
+    
+
     
