@@ -68,7 +68,7 @@ function App() {
       
       <div className="outer-div">
          {!words ? <div><textarea className="box placeholder1" placeholder="Enter Text" onChange={(e) => setMSG(e.target.value)} value={msg}></textarea></div>
-          : <div className="box box2">{
+          : <div className="box2">{
             words.map((e, i) => {
               const elem = Object.entries(e)[0];
               return (<div className='definition'>

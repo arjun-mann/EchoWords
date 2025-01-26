@@ -42,8 +42,8 @@ textarea{
   overflow: visible;
 }
 .box {
-  width: 36vw;
-  height: 40vh;
+  width: 50vw;
+  height: 60vh;
   background-color: lightblue;
   text-align: center;
   border: 2px solid black;
@@ -54,8 +54,8 @@ textarea{
 }
 
 .box2{
-  width: 36vw;
-  height: 40vh;
+  width: 50vw;
+  height: 60vh;
   background-color: lightblue;
   text-align: center;
   border: 2px solid black;
@@ -142,7 +142,7 @@ textarea{
 }
 
 .lower-box{
-  width: 75vw;
+  width: 82vw;
   height: 60vh;
   background-color: lightblue;
   text-align: center;
@@ -153,8 +153,8 @@ textarea{
   margin: 10px;
   line-height: 1.5;
   overflow: auto;
-  flex-direction: column;
   display: flex;
+  flex-direction: column;
   gap: 50px;
 }
 
